@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReFrame | ICML 2025</title>
+    <meta name="description" content="Layer Caching for Accelerated Inference in Real-Time Rendering">
+    <meta name="keywords" content="ICML 2025, ReFrame, Layer Caching, Inference, Real-Time Rendering">
+    <meta name="author" content="Lufei Liu, Tor M. Aamodt">
+    <meta property="og:title" content="ReFrame | ICML 2025">
+    <meta property="og:description" content="Layer Caching for Accelerated Inference in Real-Time Rendering">
+    <meta property="og:image" content="./images/icon.svg">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="ReFrame | ICML 2025">
+    <meta property="og:locale" content="en_CA">
+
+    <link rel="icon" href="./images/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="./images/icon.svg" type="image/svg+xml">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Serif+Text:ital@0;1&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital@1&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <div id="header">
+        <h4>ReFrame:</h4>
+        <h1>Layer Caching for Accelerated Inference in Real-Time
+            Rendering</h1>
+        <h2>ICML 2025</h2>
+        <h2><a href="https://lufei.ca">Lufei Liu</a>, <a href="https://people.ece.ubc.ca/~aamodt/">Tor M. Aamodt</a>
+        </h2>
+        <h2>University of British Columbia</h2>
+        <div class="group">
+            <a class="tag"><span>Paper <small>coming soon</small></span></a>
+            <a class="tag"><span>Poster <small>coming soon</small></span></a>
+        </div>
+    </div>
+    <div class="section" id="abstract-section">
+        <div class="container">
+            <h3>Abstract</h3>
+            <p>Graphics rendering applications increasingly leverage neural networks to improve frame rates while
+                maintaining image quality in tasks such as denoising, supersampling, and frame extrapolation. The
+                temporal coherence inherent in these tasks presents an opportunity to reuse intermediate results from
+                previous frames and avoid redundant computations. Recent work has shown that caching intermediate
+                features to be reused in subsequent inferences is an effective method to reduce latency in diffusion
+                models. We extend upon this idea as ReFrame and explore different caching policies to optimize
+                trade-offs between quality and performance for rendering workloads. By reducing the latency of the
+                neural network inferences, we can allocate more resources to high-quality rendering, such as ray
+                tracing, improving both the frame rate and final image quality. ReFrame can be applied to a variety of
+                encoder- decoder style networks commonly found in rendering pipelines. Experimental results show that we
+                can achieve 1.4&times; speedup on average with negligible quality loss in three real-time rendering
+                tasks. We outperform DeltaCNN [1], another method to exploit frame similarity, in these tasks and can
+                further improve inference time when combined.</p>
+        </div>
+    </div>
+    <div class="section" id="summary-section">
+        <div class="container">
+            <h3>ReFrame</h3>
+            <p>We exploit temporal redundancy in neural networks for real-time rendering workloads by caching
+                intermediate layer features to reuse in subsequent frames and avoid unnecessary computations, similar to
+                DeepCache [2]. We can cache features for U-Net and U-Net++ architectures as well as encoder-decoder
+                style networks that include feature concatenations.</p>
+
+            <p class="label">Caching features for U-Net and U-Net++ architectures.</p>
+            <div class="figure">
+                <img src="./images/reframe.png" alt="ReFrame for U-Net and U-Net++" class="result-image" width="100%">
+            </div>
+
+            <p class="label">Caching features for encoder-decoder feature concatenation.</p>
+            <div class="figure">
+                <img src="./images/concat.png" alt="ReFrame for concatenations" class="result-image" width="50%">
+            </div>
+
+            <p>We dynamically refresh the contents when it becomes stale by comparing the inputs of the current frame
+                against the previous inputs used to generate the cached features. This approach requires more
+                computation than the fixed refresh schedule proposed by DeepCache [2], but adapts well to the
+                unpredictable nature of real-time rendering and prevents sudden quality drops. In fact, this is one of
+                many key differences between diffusion models and real-time rendering.</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th width="50%">Diffusion</th>
+                        <th width="50%">Rendering</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="section-divider">
+                        <td colspan="2">Often applies a U-Net / Encoder-Decoder architecture.</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">Relies on repeated forward passes.</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">Features high temporal redundancy between subsequent forward-pass inferences.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Total number and behavior of forward passes is predetermined.</td>
+                        <td>Total number and bahavior of forward passes are random, dependent on real-time user inputs.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Errors from one forward pass can be corrected by other forward passes and does not affect
+                            final output.</td>
+                        <td>Errors from each forward pass is directly visible to the user and accumulates.</td>
+                    </tr>
+                    <tr>
+                        <td>Inference time is best-effort but quality is important.</td>
+                        <td>Quality is best-effort but inference time is fixed.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="section" id="results-section">
+        <div class="container">
+            <h3>Results</h3>
+            <p>ReFrame applies to 72% of inferences on average with a low sensitivity setting, resulting in a 40% reduction in FLOPs and 1.6&times; speedup in inference latency.</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Policy</th>
+                        <th>Workload</th>
+                        <th>Scene</th>
+                        <th>Skipped<br>Frames &uarr;</th>
+                        <th>Eliminated<br>Enc-Dec FLOPs &uarr;</th>
+                        <th>Speedup &uarr;</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="section-divider">
+                        <td rowspan="5"><em>Delta_H</em></td>
+                        <td rowspan="3">FE</td>
+                        <td>Sun Temple</td>
+                        <td>50%</td>
+                        <td>27%</td>
+                        <td>1.42</td>
+                    </tr>
+                    <tr>
+                        <td>Cyber Punk</td>
+                        <td>30%</td>
+                        <td>16%</td>
+                        <td>1.10</td>
+                    </tr>
+                    <tr>
+                        <td>Asian Village</td>
+                        <td>35%</td>
+                        <td>19%</td>
+                        <td>1.24</td>
+                    </tr>
+                    <tr>
+                        <td>SS</td>
+                        <td>Sun Temple</td>
+                        <td>40%</td>
+                        <td>29%</td>
+                        <td>1.30</td>
+                    </tr>
+                    <tr>
+                        <td>IC</td>
+                        <td>Garden Chair</td>
+                        <td>13%</td>
+                        <td>6%</td>
+                        <td>1.05</td>
+                    </tr>
+
+                    <tr class="section-divider">
+                        <td rowspan="5"><em>Delta_L</em></td>
+                        <td rowspan="3">FE</td>
+                        <td>Sun Temple</td>
+                        <td>80%</td>
+                        <td>43%</td>
+                        <td>1.72</td>
+                    </tr>
+                    <tr>
+                        <td>Cyber Punk</td>
+                        <td>60%</td>
+                        <td>32%</td>
+                        <td>1.49</td>
+                    </tr>
+                    <tr>
+                        <td>Asian Village</td>
+                        <td>60%</td>
+                        <td>32%</td>
+                        <td>1.55</td>
+                    </tr>
+                    <tr>
+                        <td>SS</td>
+                        <td>Sun Temple</td>
+                        <td>80%</td>
+                        <td>57%</td>
+                        <td>1.85</td>
+                    </tr>
+                    <tr>
+                        <td>IC</td>
+                        <td>Garden Chair</td>
+                        <td>79%</td>
+                        <td>34%</td>
+                        <td>1.20</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p class="label">Frame extrapolation example.</p>
+            <div class="figure">
+                <img src="./images/extranet_asia.png" alt="Frame extrapolation (ExtraNet) Asian Village"
+                    class="result-image" width="100%">
+            </div>
+            <p class="label">Supersampling example.</p>
+            <div class="figure">
+                <img src="./images/superres_suntemple.png" alt="Supersampling Sun Temple" class="result-image"
+                    width="100%">
+            </div>
+            <p class="label">Image composition example.</p>
+            <div class="figure">
+                <img src="./images/implicit-depth.png" alt="Implicit depth Garden Chair" class="result-image"
+                    width="100%">
+            </div>
+
+            <small>FE: Frame extrapolation, SS: Supersampling, IC: Image composition</small>
+        </div>
+    </div>
+    <div class="section" id="bib-section">
+        <div class="container">
+            <h3>Bibtex</h3>
+            <pre><code>@inproceedings{liu2025layer,
+    title={Layer Caching for Accelerated Inference in Real-Time Rendering},
+    author={Lufei Liu and Tor M. Aamodt},
+    booktitle={Proceedings of International Conference on Machine Learning (ICML)},
+    year={2025},
+    organization={PMLR},
+}</code></pre>
+
+            <small>[1] Parger, Mathias, Chengcheng Tang, Christopher D. Twigg, Cem Keskin, Robert Wang, and Markus
+                Steinberger. "DeltaCNN: End-to-End CNN Inference of Sparse Frame Differences in Videos." Proceedings of
+                the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR). 2022.</small>
+            <small>[2] Ma, Xinyin, Gongfan Fang, and Xinchao Wang. "DeepCache: Accelerating Diffusion Models for Free."
+                Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR). 2024.</small>
+        </div>
+    </div>
+</body>
+<footer>
+    <div id="footer">
+        <p></p>
+        <p>layer caching for accelerated inference in real-time rendering &middot; icml 2025</p>
+        <!-- <p>&#10084;</p> -->
+        <div class="contact">
+            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" width="24" height="24" fill="none"
+                viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M3.78552 9.5 12.7855 14l9-4.5-9-4.5-8.99998 4.5Zm0 0V17m3-6v6.2222c0 .3483 2 1.7778 5.99998 1.7778 4 0 6-1.3738 6-1.7778V11" />
+            </svg>
+        </div>
+    </div>
+</footer>
+
+</html>
