@@ -44,8 +44,9 @@
         </h2>
         <h2>University of British Columbia</h2>
         <div class="group">
-            <a class="tag"><span>Paper <small>coming soon</small></span></a>
+            <a class="tag" href="./reframe-paper.pdf"><span>Paper</span></a>
             <a class="tag"><span>Poster <small>coming soon</small></span></a>
+            <a class="tag"><span>Slides <small>coming soon</small></span></a>
         </div>
     </div>
     <div class="section" id="abstract-section">
@@ -76,12 +77,12 @@
 
             <p class="label">Caching features for U-Net and U-Net++ architectures.</p>
             <div class="figure">
-                <img src="./images/reframe.png" alt="ReFrame for U-Net and U-Net++" class="result-image" width="100%">
+                <img src="./images/reframe.png" alt="ReFrame for U-Net and U-Net++" class="result-image" width="100%" style="max-width: 800px">
             </div>
 
             <p class="label">Caching features for encoder-decoder feature concatenation.</p>
             <div class="figure">
-                <img src="./images/concat.png" alt="ReFrame for concatenations" class="result-image" width="50%">
+                <img src="./images/concat.png" alt="ReFrame for concatenations" class="result-image" width="100%" style="max-width: 400px">
             </div>
 
             <p>We dynamically refresh the contents when it becomes stale by comparing the inputs of the current frame
@@ -90,6 +91,7 @@
                 unpredictable nature of real-time rendering and prevents sudden quality drops. In fact, this is one of
                 many key differences between diffusion models and real-time rendering.</p>
 
+            <div class="table-container">
             <table>
                 <thead>
                     <tr>
@@ -124,6 +126,7 @@
                     </tr>
                 </tbody>
             </table>
+            </div>
         </div>
     </div>
     <div class="section" id="results-section">
@@ -131,6 +134,7 @@
             <h3>Results</h3>
             <p>ReFrame applies to 72% of inferences on average with a low sensitivity setting, resulting in a 40% reduction in FLOPs and 1.6&times; speedup in inference latency.</p>
 
+            <div class="table-container">
             <table>
                 <thead>
                     <tr>
@@ -214,21 +218,22 @@
                     </tr>
                 </tbody>
             </table>
+            </div>
 
             <p class="label">Frame extrapolation example.</p>
             <div class="figure">
                 <img src="./images/extranet_asia.png" alt="Frame extrapolation (ExtraNet) Asian Village"
-                    class="result-image" width="100%">
+                    class="result-image" width="100%" style="max-width: 800px">
             </div>
             <p class="label">Supersampling example.</p>
             <div class="figure">
                 <img src="./images/superres_suntemple.png" alt="Supersampling Sun Temple" class="result-image"
-                    width="100%">
+                    width="100%" style="max-width: 800px">
             </div>
             <p class="label">Image composition example.</p>
             <div class="figure">
                 <img src="./images/implicit-depth.png" alt="Implicit depth Garden Chair" class="result-image"
-                    width="100%">
+                    width="100%" style="max-width: 800px">
             </div>
 
             <small>FE: Frame extrapolation, SS: Supersampling, IC: Image composition</small>

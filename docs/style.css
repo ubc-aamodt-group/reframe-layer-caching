@@ -1,12 +1,12 @@
 /* Define accent colours */
 :root {
-    --main: #22223B;
-    --neutral: #4A4E69;
-    --accent: #8D7799;
-    --highlight: #887CD6;
-    --light: #C9ADA7;
-    --background: #FCF3ED;
-    --background-light: #FFFCFA;
+    --main: #0B2545;
+    --neutral: #134074;
+    --accent: #3BA0E7;
+    --highlight: #1E88E5;
+    --light: #8DA9C4;
+    --background: #E3F2FD;
+    --background-light: #F1F9FF;
 }
 
 html {
@@ -26,6 +26,7 @@ body {
 p, li, h2, small, th, td {
     font-family: 'DM Sans', sans-serif;
     font-weight: 200;
+    letter-spacing: 0.05rem;
 }
 
 h1 {
@@ -47,7 +48,7 @@ h3 {
 
 h4 {
     font-family: "DM Serif Display", serif;
-    color: var(--neutral);
+    color: var(--accent);
     font-style: italic;
 }
 
@@ -55,10 +56,6 @@ a {
     text-decoration: underline;
     text-underline-offset: 0.2em;
     /* text-decoration: none; */
-    color: var(--main);
-}
-
-a:visited {
     color: var(--main);
 }
 
@@ -111,6 +108,14 @@ a:hover {
 }
 
 .section:nth-child(even) .figure {
+    background-color: var(--background);
+}
+
+.section:nth-child(odd) .table-container {
+    background-color: var(--background-light);
+}
+
+.section:nth-child(even) .table-container {
     background-color: var(--background);
 }
 
@@ -191,7 +196,6 @@ table {
     width: 100%;
     border-collapse: collapse;
     font-size: 14px;
-    margin: 1rem;
 }
 
 th, td {
@@ -210,6 +214,10 @@ th {
     border-top: 2px solid var(--accent);
 }
 
+.table-container {
+    overflow-x: auto;
+    margin: 1rem;
+}
 
 /* mobile */
 @media (max-width: 800px) {
@@ -222,6 +230,11 @@ th {
         width: 100%;
         padding: 0;
         margin: 0;
+    }
+
+    #header h1 {
+        font-size: 2rem;
+        padding-bottom: 1rem;
     }
 }
 
