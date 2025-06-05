@@ -22,4 +22,39 @@ Our technique accelerates the neural networks behind the visuals, cutting energy
 
 
 ### More details coming soon!
-[Website](https://ubc-aamodt-group.github.io/reframe-layer-caching/)
+Visit our [website](https://ubc-aamodt-group.github.io/reframe-layer-caching/) for updates.
+
+
+## ReFrame 
+
+To apply ReFrame to your target network, identify the most suitable concatenation in the network and inject the layer caching code. 
+An example using a U-Net can be found in [./samples/unet/unet.py](./samples/unet/unet.py)
+
+
+### Supersampling Sample
+
+### Image Composition Sample
+
+### Frame Extrapolation Sample
+
+### FLIP Image Metric
+Instructions to compute FLIP scores can be found [here](https://github.com/NVlabs/flip).
+
+A sample script is included in [./samples/flip/compare_images.py](./samples/flip/compare_images.py).
+
+Install FLIP with:
+```bash
+python3 -m pip install flip_evaluator
+```
+
+
+## Cite ReFrame
+```
+@inproceedings{liu2025reframe,
+    title={ReFrame: Layer Caching for Accelerated Inference in Real-Time Rendering},
+    author={Lufei Liu and Tor M. Aamodt},
+    booktitle={Proceedings of International Conference on Machine Learning (ICML)},
+    year={2025},
+    organization={PMLR},
+}
+```
