@@ -30,6 +30,8 @@ Visit our [website](https://ubc-aamodt-group.github.io/reframe-layer-caching/) f
 To apply ReFrame to your target network, identify the most suitable concatenation in the network and inject the layer caching code. 
 An example using a U-Net can be found in [./samples/unet/unet.py](./samples/unet/unet.py)
 
+### Frame Extrapolation Sample
+Our frame extrapolation workload uses [ExtraNet](). The modified source code can be found in [./samples/FE](./samples/FE/) with detailed instructions.
 
 ### Supersampling Sample
 Our supersampling workload uses [Fourier-Based Super Resolution](https://github.com/iamxym/Deep-Fourier-based-Arbitrary-scale-Super-resolution-for-Real-time-Rendering). 
@@ -37,7 +39,6 @@ The modified source code can be found in [./samples/SS](./samples/SS/) with deta
 
 ### Image Composition Sample
 
-### Frame Extrapolation Sample
 
 ### FLIP Image Metric
 Instructions to compute FLIP scores can be found [here](https://github.com/NVlabs/flip).
