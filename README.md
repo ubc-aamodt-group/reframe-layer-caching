@@ -31,14 +31,14 @@ To apply ReFrame to your target network, identify the most suitable concatenatio
 An example using a U-Net can be found in [./samples/unet/unet.py](./samples/unet/unet.py)
 
 ### Frame Extrapolation Sample
-Our frame extrapolation workload uses [ExtraNet](). The modified source code can be found in [./samples/FE](./samples/FE/) with detailed instructions.
+Our frame extrapolation workload uses [ExtraNet](https://github.com/fuxihao66/ExtraNet). The modified source code can be found in [./samples/FE](./samples/FE/) with detailed instructions.
 
 ### Supersampling Sample
 Our supersampling workload uses [Fourier-Based Super Resolution](https://github.com/iamxym/Deep-Fourier-based-Arbitrary-scale-Super-resolution-for-Real-time-Rendering). 
 The modified source code can be found in [./samples/SS](./samples/SS/) with detailed instructions.
 
 ### Image Composition Sample
-
+Our image composition workload uses [Implicit Depth](https://github.com/nianticlabs/implicit-depth). The modified source code can be found in [./samples/IC](./samples/IC/) with detailed instructions.
 
 ### FLIP Image Metric
 Instructions to compute FLIP scores can be found [here](https://github.com/NVlabs/flip).
