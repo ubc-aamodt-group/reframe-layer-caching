@@ -46,26 +46,14 @@
         <div class="group">
             <a class="tag" href="./reframe-paper.pdf"><span>Paper</span></a>
             <a class="tag" href="https://github.com/ubc-aamodt-group/reframe-layer-caching"><span>Code</span></a>
-            <a class="tag"><span>Poster <small>coming soon</small></span></a>
-            <a class="tag"><span>Slides <small>coming soon</small></span></a>
+            <a class="tag" href="./icml2025_reframe_poster.pdf"><span>Poster</span></a>
+            <a class="tag" href="./slides_export.pdf"><span>Slides</span></a>
         </div>
     </div>
     <div class="section" id="abstract-section">
         <div class="container">
             <h3>Abstract</h3>
-            <p>Graphics rendering applications increasingly leverage neural networks to improve frame rates while
-                maintaining image quality in tasks such as denoising, supersampling, and frame extrapolation. The
-                temporal coherence inherent in these tasks presents an opportunity to reuse intermediate results from
-                previous frames and avoid redundant computations. Recent work has shown that caching intermediate
-                features to be reused in subsequent inferences is an effective method to reduce latency in diffusion
-                models. We extend upon this idea as ReFrame and explore different caching policies to optimize
-                trade-offs between quality and performance for rendering workloads. By reducing the latency of the
-                neural network inferences, we can allocate more resources to high-quality rendering, such as ray
-                tracing, improving both the frame rate and final image quality. ReFrame can be applied to a variety of
-                encoder- decoder style networks commonly found in rendering pipelines. Experimental results show that we
-                can achieve 1.4&times; speedup on average with negligible quality loss in three real-time rendering
-                tasks. We outperform DeltaCNN [1], another method to exploit frame similarity, in these tasks and can
-                further improve inference time when combined.</p>
+            <p>Graphics rendering applications increasingly leverage neural networks in tasks such as denoising, supersampling, and frame extrapolation to improve image quality while maintaining frame rates. The temporal coherence inherent in these tasks presents an opportunity to reuse intermediate results from previous frames and avoid redundant computations. Recent work has shown that caching intermediate features to be reused in subsequent inferences is an effective method to reduce latency in diffusion models. We extend this idea to real-time rendering and present ReFrame, which explores different caching policies to optimize trade-offs between quality and performance in rendering workloads. ReFrame can be applied to a variety of encoder-decoder style networks commonly found in rendering pipelines. Experimental results show that we achieve 1.4x speedup on average with negligible quality loss in three real-time rendering tasks.</p>
         </div>
     </div>
     <div class="section" id="summary-section">
@@ -73,7 +61,7 @@
             <h3>ReFrame</h3>
             <p>We exploit temporal redundancy in neural networks for real-time rendering workloads by caching
                 intermediate layer features to reuse in subsequent frames and avoid unnecessary computations, similar to
-                DeepCache [2]. We can cache features for U-Net and U-Net++ architectures as well as encoder-decoder
+                DeepCache [1]. We can cache features for U-Net and U-Net++ architectures as well as encoder-decoder
                 style networks that include feature concatenations.</p>
 
             <p class="label">Caching features for U-Net and U-Net++ architectures.</p>
@@ -88,7 +76,7 @@
 
             <p>We dynamically refresh the contents when it becomes stale by comparing the inputs of the current frame
                 against the previous inputs used to generate the cached features. This approach requires more
-                computation than the fixed refresh schedule proposed by DeepCache [2], but adapts well to the
+                computation than the fixed refresh schedule proposed by DeepCache [1], but adapts well to the
                 unpredictable nature of real-time rendering and prevents sudden quality drops. In fact, this is one of
                 many key differences between diffusion models and real-time rendering.</p>
 
@@ -113,7 +101,7 @@
                     </tr>
                     <tr>
                         <td>Total number and behavior of forward passes is predetermined.</td>
-                        <td>Total number and bahavior of forward passes are random, dependent on real-time user inputs.
+                        <td>Total number and behavior of forward passes are random, dependent on real-time user inputs.
                         </td>
                     </tr>
                     <tr>
@@ -251,10 +239,7 @@
     organization={PMLR},
 }</code></pre>
 
-            <small>[1] Parger, Mathias, Chengcheng Tang, Christopher D. Twigg, Cem Keskin, Robert Wang, and Markus
-                Steinberger. "DeltaCNN: End-to-End CNN Inference of Sparse Frame Differences in Videos." Proceedings of
-                the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR). 2022.</small>
-            <small>[2] Ma, Xinyin, Gongfan Fang, and Xinchao Wang. "DeepCache: Accelerating Diffusion Models for Free."
+            <small>[1] Xinyin Ma, Gongfan Fang, and Xinchao Wang. "DeepCache: Accelerating Diffusion Models for Free."
                 Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR). 2024.</small>
         </div>
     </div>
